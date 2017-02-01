@@ -58,6 +58,9 @@ def SpanningTreeAlgorithm(depList, noVariables):
 #
 
 # ----- UNCOMMENT FOR SUBMISSION -------- #
+noVariables, noRoots, noStates, noDataPoints, datain = ReadFile("HepatitisC.txt")
+print(datain)
+#dep_matrix = DependencyMatrix()
 #AppendString("results02.txt", "Group members: Daniel Hernandez Perez")
 #AppendString("results02.txt", "Dependency matrix for HepatitisC:")
 #AppendString("results02.txt", "")
