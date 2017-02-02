@@ -1,4 +1,5 @@
 from IDAPICourseworkLibrary import *
+from IDAPICourseworkSkeleton import *
 from numpy import *
 
 # Coursework 2 begins here
@@ -26,12 +27,11 @@ def DependencyMatrix(theData, noVariables, noStates):
     MIMatrix = zeros((noVariables,noVariables))
     # Diagonal elements should be 0 (?)
     for i in range(len(MIMatrix)):
-        for j in range(len(MIMatrix[0])):
-            if i != j:
-                mi = MutualInformation(JPT(theData, i, j, noStates))
-                # Symmetrical matrix. Dep(A,B) = Dep(B,A)
-                MIMatrix[i][j] = mi
-                MIMatrix[j][i] = mi
+        for j in range(i+1, len(MIMatrix[0])):
+            mi = MutualInformation(JPT(theData, i, j, noStates))
+            # Symmetrical matrix. Dep(A,B) = Dep(B,A)
+            MIMatrix[i][j] = mi
+            MIMatrix[j][i] = mi
     return MIMatrix
 
 # Function to compute an ordered list of dependencies 
@@ -42,7 +42,7 @@ def DependencyList(depMatrix):
     for i in range(len(depMatrix)):
         for j in range(len(depMatrix[0])):
             flattened_dep_matrix.append( (depMatrix[i][j], i, j) )
-    depList = sorted(flattened_dep_matrix, key=lambda x: x[0])
+    depList = sorted(flattened_dep_matrix, key=lambda x: x[0], reverse=True)
     return array(depList)
 #
 # Functions implementing the spanning tree algorithm
@@ -58,9 +58,15 @@ def SpanningTreeAlgorithm(depList, noVariables):
 #
 
 # ----- UNCOMMENT FOR SUBMISSION -------- #
-noVariables, noRoots, noStates, noDataPoints, datain = ReadFile("HepatitisC.txt")
-print(datain)
-#dep_matrix = DependencyMatrix()
+numpy.set_printoptions(suppress=True) # In order to print it nicely:
+
+#noVariables, noRoots, noStates, noDataPoints, datain = ReadFile("HepatitisC.txt")
+#theData    = [list(x) for x in array(datain)]
+#noStates   = list(noStates)
+#dep_matrix = DependencyMatrix(theData, noVariables, noStates)
+#dep_list   = DependencyList(dep_matrix)
+#print_lateX_dep_list
+
 #AppendString("results02.txt", "Group members: Daniel Hernandez Perez")
 #AppendString("results02.txt", "Dependency matrix for HepatitisC:")
 #AppendString("results02.txt", "")
